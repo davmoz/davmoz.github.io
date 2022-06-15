@@ -20,7 +20,7 @@ return (deviceCache ? Promise.resolve(deviceCache) :
       requestBluetoothDevice()).
     //   then(device => connectDeviceAndCacheCharacteristic(device)).
     //   then(characteristic => startNotifications(characteristic)).
-      catch(error => log(error));
+      catch(error => console.error(error))
 }
 
 /**
@@ -34,7 +34,7 @@ function disconnect () {
  * @returns {object} Bluetooth device.
  */
 async function requestBluetoothDevice() {
-  console.log('Requesting bluetooth device...');
+  console.log('Requesting bluetooth device...')
 
   const device = await navigator.bluetooth.requestDevice()
 //   return navigator.bluetooth.requestDevice({
