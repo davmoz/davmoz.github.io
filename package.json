@@ -1,0 +1,25 @@
+{
+  "name": "mtslck.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtslck/mtslck.github.io.git"
+  },
+  "keywords": [],
+  "author": "Mats Loock <mats.loock@lnu.se>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtslck/mtslck.github.io/issues"
+  },
+  "homepage": "https://github.com/mtslck/mtslck.github.io#readme",
+    "devDependencies": {
+    "@lnu/eslint-config": "^1.1.5"
+  }
+
+}
