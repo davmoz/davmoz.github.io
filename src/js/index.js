@@ -1,3 +1,6 @@
+import {format} from 'date-fns'
+import svLocale from 'date-fns/locale/sv'
+
 // Selected device object cache
 let deviceCache = null
 
@@ -34,7 +37,7 @@ function disconnect () {
  */
 function log(data, type = '') {
   terminalContainer.insertAdjacentHTML('afterbegin',
-    '<div' + (type ? ' class="' + type + '"' : '') + '>' + data + '</div>')
+    `<div${type ? ' class="' + type + '"' : ''}>${data}</div>`)
 }
 
 /**
@@ -49,12 +52,12 @@ async function requestBluetoothDevice() {
     acceptAllDevices: true
   })
 
-  log('"' + device.name + '" bluetooth device selected')
+  log(`"${device.name}" bluetooth device selected`)
   deviceCache = device;
 
   return deviceCache;
 }
 
 const watchID = navigator.geolocation.watchPosition((position) => {
-  log(`${position.coords.latitude}, ${position.coords.longitude} (${position.timestamp})`)
+  log(`[${format(new Date(position.timestamp), 'Ppp', {locale: svLocale})}] ${position.coords.latitude}, ${position.coords.longitude}`)
 })
