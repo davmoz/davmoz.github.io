@@ -16,10 +16,10 @@ disconnectButton.addEventListener('click', () => disconnect())
  * Launch Bluetooth device chooser and connect to the selected.
  */
 function connect () {
-return (deviceCache ? Promise.resolve(deviceCache) :
+  return (deviceCache ? Promise.resolve(deviceCache) :
       requestBluetoothDevice()).
-    //   then(device => connectDeviceAndCacheCharacteristic(device)).
-    //   then(characteristic => startNotifications(characteristic)).
+      //   then(device => connectDeviceAndCacheCharacteristic(device)).
+      //   then(characteristic => startNotifications(characteristic)).
       catch(error => console.error(error))
 }
 
@@ -46,3 +46,7 @@ async function requestBluetoothDevice() {
 
   return deviceCache;
 }
+
+const watchID = navigator.geolocation.watchPosition((position) => {
+  console.log(position.coords.latitude, position.coords.longitude)
+})
