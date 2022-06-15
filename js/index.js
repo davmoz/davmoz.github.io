@@ -34,7 +34,7 @@ function disconnect () {
  * @returns {object} Bluetooth device.
  */
 async function requestBluetoothDevice() {
-  log('Requesting bluetooth device...');
+  console.log('Requesting bluetooth device...');
 
   const device = await navigator.bluetooth.requestDevice()
 //   return navigator.bluetooth.requestDevice({
