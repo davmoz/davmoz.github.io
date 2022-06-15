@@ -1,1 +1,11 @@
-body {}
+#terminal div {
+    color: gray;
+}
+
+#terminal div.out {
+    color: red;
+}
+
+#terminal div.in {
+    color: blue;
+}

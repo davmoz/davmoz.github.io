@@ -20,7 +20,7 @@ function connect () {
       requestBluetoothDevice()).
       //   then(device => connectDeviceAndCacheCharacteristic(device)).
       //   then(characteristic => startNotifications(characteristic)).
-      catch(error => console.error(error))
+      catch(error => log(error))
 }
 
 /**
@@ -30,24 +30,32 @@ function disconnect () {
 }
 
 /**
+ * Outputs to terminal.
+ */
+function log(data, type = '') {
+  terminalContainer.insertAdjacentHTML('afterbegin',
+    '<div' + (type ? ' class="' + type + '"' : '') + '>' + data + '</div>')
+}
+
+/**
  * 
  * @returns {object} Bluetooth device.
  */
 async function requestBluetoothDevice() {
-  console.log('Requesting bluetooth device...')
+  log('Requesting bluetooth device...')
 
   const device = await navigator.bluetooth.requestDevice({
 //     filters: [{services: [0xFFE0]}],
     acceptAllDevices: true
   })
 
-  console.log('"' + device.name + '" bluetooth device selected')
+  log('"' + device.name + '" bluetooth device selected')
   deviceCache = device;
 
   return deviceCache;
 }
 
-console.log('Watching geolocation...')
+log('Watching geolocation...')
 const watchID = navigator.geolocation.watchPosition((position) => {
-  console.log({position})
+  log(JSON.stringify(position))
 })
