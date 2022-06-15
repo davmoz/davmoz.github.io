@@ -49,5 +49,5 @@ async function requestBluetoothDevice() {
 
 console.log('Watching geolocation...')
 const watchID = navigator.geolocation.watchPosition((position) => {
-  console.log(position.coords.latitude, position.coords.longitude)
+  console.log({position})
 })
