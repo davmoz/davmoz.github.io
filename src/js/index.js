@@ -1,63 +1,46 @@
-import {format} from 'date-fns'
+import { format } from 'date-fns'
 import svLocale from 'date-fns/locale/sv'
+import { BluetoothClient } from './BluetoothClient.js'
 
-// Selected device object cache
-let deviceCache = null
+const bluetoothClient = new BluetoothClient()
 
-// Get references to UI elements
-const connectButton = document.getElementById('connect');
-const disconnectButton = document.getElementById('disconnect');
-const terminalContainer = document.getElementById('terminal');
+bluetoothClient.addEventListener('log', (eventArgs) => {
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`)
+})
 
-// Connect to the device on Connect button click
-connectButton.addEventListener('click', () => connect())
+// Get reference to terminal element.
+const terminalContainer = document.getElementById('terminal')
 
-// Disconnect from the device on Disconnect button click
-disconnectButton.addEventListener('click', () => disconnect())
+// Connect to the device on Connect button click.
+document.getElementById('connect')
+  .addEventListener('click', async () => {
+    try {
+      await bluetoothClient.connect()
+    } catch (err) {
+      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'error')
+    }
+  })
 
-/**
- * Launch Bluetooth device chooser and connect to the selected.
- */
-function connect () {
-  return (deviceCache ? Promise.resolve(deviceCache) :
-      requestBluetoothDevice()).
-      //   then(device => connectDeviceAndCacheCharacteristic(device)).
-      //   then(characteristic => startNotifications(characteristic)).
-      catch(error => log(error))
-}
-
-/**
- * Disconnect from the connected device.
- */
-function disconnect () {
-}
-
+// Disconnect from the device on Disconnect button click.
+document.getElementById('disconnect')
+  .addEventListener('click', async () => {
+    try {
+      await bluetoothClient.disconnect()
+    } catch (err) {
+      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'error')
+    }
+  })
 /**
  * Outputs to terminal.
+ *
+ * @param {*} data - ...
+ * @param {*} type - ...
  */
-function log(data, type = '') {
+function log (data, type = '') {
   terminalContainer.insertAdjacentHTML('afterbegin',
     `<div${type ? ' class="' + type + '"' : ''}>${data}</div>`)
 }
 
-/**
- * 
- * @returns {object} Bluetooth device.
- */
-async function requestBluetoothDevice() {
-  log('Requesting bluetooth device...')
-
-  const device = await navigator.bluetooth.requestDevice({
-//     filters: [{services: [0xFFE0]}],
-    acceptAllDevices: true
-  })
-
-  log(`"${device.name}" bluetooth device selected`)
-  deviceCache = device;
-
-  return deviceCache;
-}
-
 const watchID = navigator.geolocation.watchPosition((position) => {
-  log(`[${format(new Date(position.timestamp), 'Ppp', {locale: svLocale})}] ${position.coords.latitude}, ${position.coords.longitude}`)
+  log(`[${format(new Date(position.timestamp), 'Ppp', { locale: svLocale })}] ${position.coords.latitude}, ${position.coords.longitude}`)
 })

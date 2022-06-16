@@ -2,10 +2,6 @@
     color: gray;
 }
 
-#terminal div.out {
+#terminal div.error {
     color: red;
-}
-
-#terminal div.in {
-    color: blue;
 }
