@@ -44,3 +44,19 @@ function log (data, type = '') {
 const watchID = navigator.geolocation.watchPosition((position) => {
   log(`[${format(new Date(position.timestamp), 'Ppp', { locale: svLocale })}] ${position.coords.latitude}, ${position.coords.longitude}`)
 })
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('./sw.js')
+    .then(function (registration) {
+      // Registration was successful
+      console.log(
+        'ServiceWorker registration successful with scope: ',
+        registration.scope
+      )
+    })
+    .catch(function (err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err)
+    })
+}
