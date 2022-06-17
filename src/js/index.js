@@ -5,7 +5,11 @@ import { BluetoothClient } from './BluetoothClient.js'
 const bluetoothClient = new BluetoothClient()
 
 bluetoothClient.addEventListener('log', (eventArgs) => {
-  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`)
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-secondary')
+})
+
+bluetoothClient.addEventListener('newmeasuredvalue', (eventArgs) => {
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-success')
 })
 
 // Get reference to terminal element.
@@ -15,9 +19,18 @@ const terminalContainer = document.getElementById('terminal')
 document.getElementById('connect')
   .addEventListener('click', async () => {
     try {
-      await bluetoothClient.connect()
+      let serviceUuid = document.querySelector('#service').value
+      if (serviceUuid.startsWith('0x')) {
+        serviceUuid = Number.parseInt(serviceUuid)
+      }
+
+      let characteristicUuid = document.querySelector('#characteristic').value
+      if (characteristicUuid.startsWith('0x')) {
+        characteristicUuid = Number.parseInt(characteristicUuid)
+      }
+      await bluetoothClient.connect(serviceUuid, characteristicUuid)
     } catch (err) {
-      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'error')
+      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
     }
   })
 
@@ -27,7 +40,7 @@ document.getElementById('disconnect')
     try {
       await bluetoothClient.disconnect()
     } catch (err) {
-      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'error')
+      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
     }
   })
 /**
@@ -42,7 +55,7 @@ function log (data, type = '') {
 }
 
 const watchID = navigator.geolocation.watchPosition((position) => {
-  log(`[${format(new Date(position.timestamp), 'Ppp', { locale: svLocale })}] ${position.coords.latitude}, ${position.coords.longitude}`)
+  log(`[${format(new Date(position.timestamp), 'Ppp', { locale: svLocale })}] ${position.coords.latitude}, ${position.coords.longitude}`, 'text-warning')
 })
 
 if ('serviceWorker' in navigator) {

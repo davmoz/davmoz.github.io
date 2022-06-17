@@ -6,18 +6,43 @@
     <title>Forkbeard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkZvcmtiZWFyZDogVGhlIEJsdWV0b290aCBzcGF3biB0byBtZWFzdXJlIHdpdGgiLAogICJzaG9ydF9uYW1lIjogIkZvcmtiZWFyZCIsCiAgInRoZW1lX2NvbG9yIjogIiMwMDlFRkYiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmYiLAogICJkaXNwbGF5IjogImZ1bGxzY3JlZW4iLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgInNjb3BlIjogIi8iLAogICJzdGFydF91cmwiOiAiLyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImltYWdlcy9pY29ucy9pY29uLTcyeDcyLnBuZyIsCiAgICAgICJzaXplcyI6ICI3Mng3MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaW1hZ2VzL2ljb25zL2ljb24tOTZ4OTYucG5nIiwKICAgICAgInNpemVzIjogIjk2eDk2IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi0xMjh4MTI4LnBuZyIsCiAgICAgICJzaXplcyI6ICIxMjh4MTI4IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi0xNDR4MTQ0LnBuZyIsCiAgICAgICJzaXplcyI6ICIxNDR4MTQ0IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi0xNTJ4MTUyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxNTJ4MTUyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi0xOTJ4MTkyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi0zODR4Mzg0LnBuZyIsCiAgICAgICJzaXplcyI6ICIzODR4Mzg0IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpbWFnZXMvaWNvbnMvaWNvbi01MTJ4NTEyLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     
     
-  <script type="module" crossorigin src="/assets/index.98aefd8c.js"></script>
-  <link rel="stylesheet" href="/assets/index.514821fe.css">
+  <script type="module" crossorigin src="/assets/index.be5a1c4e.js"></script>
+  <link rel="stylesheet" href="/assets/index.93faaaf5.css">
 </head>
 
 <body>
-    <h1>Forkbeard</h1>
-    <p>The Bluetooth spawn to measure with</p>
-    <button id="connect" type="button">Connect</button>
-    <button id="disconnect" type="button">Disconnect</button>
-    <div id="terminal"></div>
+    <div class="container">
+        <header>
+            <h1>Forkbeard <small>- the Bluetooth spawn to measure with</small></h1>
+        </header>
+        <main>
+            <section>
+                <h2>Bluetooth Options</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="service">Service</label>
+                        <input class="form-control" id="service" value="0x462" />
+                    </div>
+                    <div class="form-group">
+                        <label for="characteristic">Characteristic</label>
+                        <input class="form-control" id="characteristic" value="0x463" />
+                    </div>
+                    <div class="form-group">
+                        <button id="connect" type="button">Connect</button>
+                        <button id="disconnect" type="button">Disconnect</button>
+                    </div>
+                </form>
+            </section>
+            <section>
+                <h2>Log</h2>
+                <div id="terminal"></div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>

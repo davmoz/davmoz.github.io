@@ -2,20 +2,45 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Forkbeard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="./manifest.json">
-  <script type="module" crossorigin src="/assets/index.98aefd8c.js"></script>
-  <link rel="stylesheet" href="/assets/index.514821fe.css">
+    <meta charset="utf-8">
+    <title>Forkbeard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script type="module" crossorigin src="/assets/index.be5a1c4e.js"></script>
+    <link rel="stylesheet" href="/assets/index.93faaaf5.css">
 </head>
 
 <body>
-  <h1>Forkbeard</h1>
-  <p>The Bluetooth spawn to measure with</p>
-  <button id="connect" type="button">Connect</button>
-  <button id="disconnect" type="button">Disconnect</button>
-  <div id="terminal"></div>
+    <div class="container">
+        <header>
+            <h1>Forkbeard <small>- the Bluetooth spawn to measure with</small></h1>
+        </header>
+        <main>
+            <section>
+                <h2>Bluetooth Options</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="service">Service</label>
+                        <input class="form-control" id="service" value="0x462" />
+                    </div>
+                    <div class="form-group">
+                        <label for="characteristic">Characteristic</label>
+                        <input class="form-control" id="characteristic" value="0x463" />
+                    </div>
+                    <div class="form-group">
+                        <button id="connect" type="button">Connect</button>
+                        <button id="disconnect" type="button">Disconnect</button>
+                    </div>
+                </form>
+            </section>
+            <section>
+                <h2>Log</h2>
+                <div id="terminal"></div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>
