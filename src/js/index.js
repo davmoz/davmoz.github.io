@@ -60,7 +60,7 @@ const watchID = navigator.geolocation.watchPosition((position) => {
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-    .register('./sw.js')
+    .register('sw.js')
     .then(function (registration) {
       // Registration was successful
       console.log(
