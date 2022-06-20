@@ -4,11 +4,11 @@ import { BluetoothClient } from './BluetoothClient.js'
 
 const bluetoothClient = new BluetoothClient()
 
-bluetoothClient.addEventListener('log', (eventArgs) => {
+bluetoothClient.addEventListener(BluetoothClient.events.LOG, (eventArgs) => {
   log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-secondary')
 })
 
-bluetoothClient.addEventListener('newmeasuredvalue', (eventArgs) => {
+bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, (eventArgs) => {
   log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-success')
 })
 

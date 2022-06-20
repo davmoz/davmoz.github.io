@@ -14,6 +14,11 @@ export class BluetoothClient extends Reactor {
   #boundGattServerDisconnectedHandler = undefined
   #boundCharacteristicValueChangedHandler = undefined
 
+  static events = Object.freeze({
+    LOG: 'log',
+    NEW_MEASURED_VALUE: 'newmeasuredvalue'
+  })
+
   /**
    * ...
    */
@@ -89,7 +94,7 @@ export class BluetoothClient extends Reactor {
       // filters: [{ services: ['heart_rate'] }]
       // filters: [{ services: [0xFFE0] }],
       // optionalServices: [0x2BDC545D6B4B7C],
-      filters: [{ name: 'LoPy' }],
+      filters: [{ name: 'Forkbeard' }],
       // acceptAllDevices: true,
       // filters: [{ services: [this.#serviceUUid] }],
       optionalServices: [this.#serviceUUid]
@@ -153,7 +158,9 @@ export class BluetoothClient extends Reactor {
 
     const { value: dataView } = event.target
     console.log({ dataView })
-    this.dispatchEvent('newmeasuredvalue', new LogEventArgs(dataView.getInt8(0).toString()))
+    if (dataView?.byteLength > 0) {
+      this.dispatchEvent('newmeasuredvalue', new LogEventArgs(dataView.getInt8(0).toString()))
+    }
   }
 
   /**
