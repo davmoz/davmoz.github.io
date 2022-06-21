@@ -11,6 +11,7 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, push } from 'firebase/database'
 import { getFirebaseConfig } from './firebase-config.js'
 
+let serviceUuid
 let latestPosition = null
 
 // Initialize Firebase.
@@ -29,24 +30,34 @@ bluetoothClient.addEventListener(BluetoothClient.events.LOG, (eventArgs) => {
 
 bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, async (eventArgs) => {
   console.log({ eventArgs })
-  try {
-    push(ref(database, 'measuredvalues/'), {
-      position: latestPosition,
-      // data: {
-      //   message: eventArgs.message,
-      //   value: eventArgs.value,
-      //   timestamp: eventArgs.timestamp.getTime()
-      // }
-      pm25: eventArgs.value.pm25,
-      pm10: eventArgs.value.pm10,
-      timestamp: eventArgs.timestamp.getTime()
-    })
-  } catch (err) {
-    console.error('Error writing new todo item to Firebase Database', err)
-    log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
+  if (serviceUuid === 'e6d86e52-fc3a-4b6a-b359-fc59f5b2a7df') {
+    try {
+      push(ref(database, 'measuredvalues/'), {
+        position: latestPosition,
+        pm25: eventArgs.value.pm25,
+        pm10: eventArgs.value.pm10,
+        tmp: eventArgs.value.tmp,
+        hum: eventArgs.value.hum,
+        co2: eventArgs.value.co2,
+        eco2: eventArgs.value.eco2,
+        tvoc: eventArgs.value.tvoc,
+        timestamp: eventArgs.timestamp.getTime()
+      })
+    } catch (err) {
+      console.error('Error writing new todo item to Firebase Database', err)
+      log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
+    }
   }
-
-  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] PM2.5: ${eventArgs.value.pm25.toFixed(2)}, PM10: ${eventArgs.value.pm10.toFixed(2)}`, 'text-success')
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}]
+    pm2.5: ${eventArgs.value.pm25.toFixed(2)}, 
+    pm10: ${eventArgs.value.pm10.toFixed(2)},
+    tmp: ${eventArgs.value.tmp.toFixed(2)},
+    hum: ${eventArgs.value.hum.toFixed(2)},
+    co2: ${eventArgs.value.co2.toFixed(2)},
+    eco2: ${eventArgs.value.eco2.toFixed(2)},
+    tvoc: ${eventArgs.value.tvoc.toFixed(2)}`
+  , 'text-success'
+  )
 })
 
 // Get reference to terminal element.
@@ -56,7 +67,7 @@ const terminalContainer = document.getElementById('terminal')
 document.getElementById('connect')
   .addEventListener('click', async () => {
     try {
-      let serviceUuid = document.querySelector('#service').value
+      serviceUuid = document.querySelector('#service').value
       if (serviceUuid.startsWith('0x')) {
         serviceUuid = Number.parseInt(serviceUuid)
       }

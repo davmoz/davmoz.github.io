@@ -155,17 +155,25 @@ export class BluetoothClient extends Reactor {
    * @param {*} event ...
    */
   async #characteristicValueChangedHandler (event) {
-    console.log(event.target)
-
     const { value: dataView } = event.target
     console.log({ dataView })
     if (dataView?.byteLength > 0) {
       console.log('pm25', dataView.getFloat32(0, true))
       console.log('pm10', dataView.getFloat32(4, true))
+      console.log('tmp', dataView.getFloat32(8, true))
+      console.log('hum', dataView.getFloat32(12, true))
+      console.log('c02', dataView.getFloat32(16, true))
+      console.log('eco2', dataView.getFloat32(20, true))
+      console.log('tovc', dataView.getFloat32(24, true))
       this.dispatchEvent('newmeasuredvalue',
         new MeasuredValueEventArgs('data', {
           pm25: dataView.getFloat32(0, true),
-          pm10: dataView.getFloat32(4, true)
+          pm10: dataView.getFloat32(4, true),
+          tmp: dataView.getFloat32(8, true),
+          hum: dataView.getFloat32(12, true),
+          co2: dataView.getFloat32(16, true),
+          teco2: dataView.getFloat32(20, true),
+          tovc: dataView.getFloat32(20, true)
         })
       )
     }
