@@ -160,7 +160,14 @@ export class BluetoothClient extends Reactor {
     const { value: dataView } = event.target
     console.log({ dataView })
     if (dataView?.byteLength > 0) {
-      this.dispatchEvent('newmeasuredvalue', new MeasuredValueEventArgs('fake data', dataView.getInt8(0)))
+      console.log('pm25', dataView.getFloat32(0, true))
+      console.log('pm10', dataView.getFloat32(4, true))
+      this.dispatchEvent('newmeasuredvalue',
+        new MeasuredValueEventArgs('data', {
+          pm25: dataView.getFloat32(0, true),
+          pm10: dataView.getFloat32(4, true)
+        })
+      )
     }
   }
 

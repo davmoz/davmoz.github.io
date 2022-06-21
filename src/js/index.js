@@ -32,18 +32,21 @@ bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, asyn
   try {
     push(ref(database, 'measuredvalues/'), {
       position: latestPosition,
-      data: {
-        message: eventArgs.message,
-        value: eventArgs.value,
-        timestamp: eventArgs.timestamp.getTime()
-      }
+      // data: {
+      //   message: eventArgs.message,
+      //   value: eventArgs.value,
+      //   timestamp: eventArgs.timestamp.getTime()
+      // }
+      pm25: eventArgs.value.pm25,
+      pm10: eventArgs.value.pm10,
+      timestamp: eventArgs.timestamp.getTime()
     })
   } catch (err) {
     console.error('Error writing new todo item to Firebase Database', err)
     log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
   }
 
-  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}: ${eventArgs.value}`, 'text-success')
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] PM2.5: ${eventArgs.value.pm25.toFixed(2)}, PM10: ${eventArgs.value.pm10.toFixed(2)}`, 'text-success')
 })
 
 // Get reference to terminal element.
