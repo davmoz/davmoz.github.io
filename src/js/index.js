@@ -29,13 +29,9 @@ bluetoothClient.addEventListener(BluetoothClient.events.LOG, (eventArgs) => {
 
 bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, async (eventArgs) => {
   try {
-    // await addDoc(collection(getFirestore(), 'MeasuredValues'), {
-    //   position: { ...latestPosition },
-    //   value: eventArgs.value
-    // })
     push(ref(database, 'measuredvalues/'), {
       position: latestPosition,
-      value: eventArgs.value
+      data: eventArgs
     })
   } catch (err) {
     console.error('Error writing new todo item to Firebase Database', err)
