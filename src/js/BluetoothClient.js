@@ -95,7 +95,10 @@ export class BluetoothClient extends Reactor {
       // filters: [{ services: ['heart_rate'] }]
       // filters: [{ services: [0xFFE0] }],
       // optionalServices: [0x2BDC545D6B4B7C],
-      filters: [{ name: 'Forkbeard' }],
+      filters: [
+        { name: 'Forkbeard' },
+        { namePrefix: 'ESP32' }
+      ],
       // acceptAllDevices: true,
       // filters: [{ services: [this.#serviceUUid] }],
       optionalServices: [this.#serviceUUid]
