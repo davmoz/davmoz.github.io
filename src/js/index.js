@@ -2,13 +2,13 @@ import { format } from 'date-fns'
 import svLocale from 'date-fns/locale/sv'
 import { BluetoothClient } from './BluetoothClient.js'
 import { initializeApp } from 'firebase/app'
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs
-} from 'firebase/firestore'
-import { getDatabase, ref, set, push } from 'firebase/database'
+// import {
+//   getFirestore,
+//   collection,
+//   addDoc,
+//   getDocs
+// } from 'firebase/firestore'
+import { getDatabase, ref, push } from 'firebase/database'
 import { getFirebaseConfig } from './firebase-config.js'
 
 let latestPosition = null
