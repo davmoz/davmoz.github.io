@@ -176,7 +176,7 @@ export class BluetoothClient extends Reactor {
           hum: dataView.getFloat32(12, true),
           co2: dataView.getFloat32(16, true),
           eco2: dataView.getFloat32(20, true),
-          tovc: dataView.getFloat32(24, true)
+          tvoc: dataView.getFloat32(24, true)
         })
       )
     }
