@@ -1,5 +1,6 @@
 import { Reactor } from './Reactor.js'
 import { LogEventArgs } from './LogEventArgs.js'
+import { MeasuredValueEventArgs } from './MeasuredValueEventArgs.js'
 
 /**
  *
@@ -159,7 +160,7 @@ export class BluetoothClient extends Reactor {
     const { value: dataView } = event.target
     console.log({ dataView })
     if (dataView?.byteLength > 0) {
-      this.dispatchEvent('newmeasuredvalue', new LogEventArgs(dataView.getInt8(0).toString()))
+      this.dispatchEvent('newmeasuredvalue', new MeasuredValueEventArgs('fake data', dataView.getInt8(0).toString()))
     }
   }
 

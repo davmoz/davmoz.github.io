@@ -1,15 +1,48 @@
 import { format } from 'date-fns'
 import svLocale from 'date-fns/locale/sv'
 import { BluetoothClient } from './BluetoothClient.js'
+import { initializeApp } from 'firebase/app'
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
+} from 'firebase/firestore'
+import { getDatabase, ref, set, push } from 'firebase/database'
+import { getFirebaseConfig } from './firebase-config.js'
 
+let latestPosition = null
+
+// Initialize Firebase.
+const app = initializeApp(getFirebaseConfig())
+// const analytics = getAnalytics(app)
+
+// Initialize Realtime Database and get a reference to the service.
+const database = getDatabase(app)
+
+// Initialize Bluetooth
 const bluetoothClient = new BluetoothClient()
 
 bluetoothClient.addEventListener(BluetoothClient.events.LOG, (eventArgs) => {
   log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-secondary')
 })
 
-bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, (eventArgs) => {
-  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}`, 'text-success')
+bluetoothClient.addEventListener(BluetoothClient.events.NEW_MEASURED_VALUE, async (eventArgs) => {
+  try {
+    // await addDoc(collection(getFirestore(), 'MeasuredValues'), {
+    //   position: { ...latestPosition },
+    //   value: eventArgs.value
+    // })
+    push(ref(database, 'measuredvalues/'), {
+      position: latestPosition,
+      value: eventArgs.value
+    })
+  } catch (err) {
+    console.error('Error writing new todo item to Firebase Database', err)
+    log(`[${format(new Date(), 'Ppp', { locale: svLocale })}] ${err}`, 'bg-danger text-white')
+  }
+
+  log(`[${format(eventArgs.timestamp, 'Ppp', { locale: svLocale })}] ${eventArgs.message}: ${eventArgs.value}`, 'text-success')
 })
 
 // Get reference to terminal element.
@@ -54,7 +87,20 @@ function log (data, type = '') {
     `<div${type ? ' class="' + type + '"' : ''}>${data}</div>`)
 }
 
+// Initialize geolocation.
 const watchID = navigator.geolocation.watchPosition((position) => {
+  latestPosition = {
+    coords: {
+      accuracy: position.coords.accuracy,
+      altitude: position.coords.altitude,
+      altitudeAccuracy: position.coords.altitudeAccuracy,
+      heading: position.coords.heading,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      speed: position.coords.speed
+    },
+    timestamp: position.timestamp
+  }
   log(`[${format(new Date(position.timestamp), 'Ppp', { locale: svLocale })}] ${position.coords.latitude}, ${position.coords.longitude}`, 'text-warning')
 })
 
