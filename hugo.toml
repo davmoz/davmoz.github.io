@@ -4,7 +4,6 @@ title = 'davmoz'
 theme = 'PaperMod'
 
 [params]
-  author = 'davmoz'
   description = 'Personal tech blog'
   ShowReadingTime = true
   ShowShareButtons = false
@@ -12,31 +11,13 @@ theme = 'PaperMod'
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   defaultTheme = 'auto'
+  math = true
 
-  [params.homeInfoParams]
-    Title = "Hey there"
-    Content = "Welcome to my tech blog. I write about things I'm working on."
+  author = 'davmoz'
 
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/davmoz"
-
-[menu]
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 10
-  [[menu.main]]
-    identifier = "archive"
-    name = "Archive"
-    url = "/archive/"
-    weight = 20
-  [[menu.main]]
-    identifier = "search"
-    name = "Search"
-    url = "/search/"
-    weight = 30
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
