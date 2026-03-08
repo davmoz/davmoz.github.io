@@ -9,11 +9,19 @@ math: true
 
 You need to find every solar inverter on a local network. Automatically. No config files, no manual IP entry — just scan, identify, and start reading data.
 
-The catch? The protocol these devices speak was designed in 1979, and it has no concept of discovery.
+The catch? The protocol these devices speak was designed in 1979, and it has no concept of network discovery.
 
 ## The problem with Modbus
 
 Modbus TCP is request-response over a raw TCP socket. No service advertisement, no mDNS, no broadcast. A device sitting on port 502 will never announce itself. The only way to find it is to connect, ask a question, and see if the answer makes sense.
+
+Modbus *does* define a device identification mechanism — Function Code 43 / MEI Type 14 (Read Device Identification), specified in [section 6.21 of the Modbus Application Protocol V1.1b](https://www.support.aceautomation.eu/wp-content/uploads/Modbus_Application_Protocol_V1_1b.pdf). It can return objects like vendor name, product code, and revision. But for a universal scanner, it's not something you can depend on:
+
+- **Devices aren't required to implement it.** The spec's own state diagram (Figure 30) shows that a device may respond to FC 43 with exception code 01 (Illegal Function) — meaning it simply doesn't support the function. In practice, many inverters and IoT gateways don't.
+- **The strings are free-form.** One device returns `"HUAWEI"`, another `"Huawei Technologies"` — there's no standardized vocabulary, so you'd need fuzzy matching against every possible variation.
+- **It doesn't give you a register map.** Even if you identify the vendor, you still need to know *which registers to read* for that specific model. The identification response alone doesn't tell you that.
+
+So in practice, the most reliable approach is to skip FC 43 entirely and go straight to probing known registers — which doubles as both identification *and* validation that you can actually communicate with the device.
 
 ```
   Scanner                    Device (port 502)
